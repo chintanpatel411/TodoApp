@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme, fade } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,11 +12,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import ListItemText from '@material-ui/core/ListItemText';  
 import InputBase from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -25,142 +24,45 @@ import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-const drawerWidth = 240;
+import MenuStyle from '../style/menu-style';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import Collapse from '@material-ui/core/Collapse';
+import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
+import OpacityIcon from '@material-ui/icons/Opacity';
+import AddIcon from '@material-ui/icons/Add';
+import MailIcon from '@material-ui/icons/Mail';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
-  },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
-  },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
 
-export default function DrawerMenu() {
-  const classes = useStyles();
+export default function DrawerMenu(props) {
+  const classes = MenuStyle();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [projectMenuOpen, setProjectMenuOpen] = React.useState(false)
+  const [labelsMenuOpen, setLabelesMenuOpen] = React.useState(false)
+  const [sharedMenuOpen, setSharedMenuOpen] = React.useState(false)
+  const [filterMenuOpen, setFilterMenuOpen] = React.useState(false)
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  function handleProjectMenuClick() {
+    setProjectMenuOpen(!projectMenuOpen)
+  }
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  function handleLablesMenuClick() {
+    setLabelesMenuOpen(!labelsMenuOpen)
+  }
+
+  function handleSharedMenuClick() {
+    setSharedMenuOpen(!sharedMenuOpen)
+  }
+
+  function handleFilterMenuClick() {
+    setFilterMenuOpen(!filterMenuOpen)
+  } 
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -236,21 +138,21 @@ export default function DrawerMenu() {
   );
 
   return (
-    <>
+    <div className="body">
       <CssBaseline />
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
+          [classes.appBarShift]: props.open,
         })}
       >
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={props.handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
+            className={clsx(classes.menuButton, props.open && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
@@ -278,9 +180,9 @@ export default function DrawerMenu() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
+
+              <CheckCircleOutlineOutlinedIcon />
+              <span style={{ fontSize: 15, marginLeft: 5 }}>10/5</span>
             </IconButton>
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
@@ -315,38 +217,133 @@ export default function DrawerMenu() {
         className={classes.drawer}
         variant="persistent"
         anchor="left"
-        open={open}
+        open={props.open}
         classes={{
           paper: classes.drawerPaper,
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={props.handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button key="today">
+            {/* Today Menu */}
+            <ListItemIcon ><CalendarTodayIcon style={{ color: "#3a8235" }} /></ListItemIcon>
+            <ListItemText primary="Today" />
+            <span style={{ color: "#ce5642" }}>2</span>
+          </ListItem>
+
+          {/* Project Menu */}
+          <ListItem button onClick={handleProjectMenuClick} className={classes.menuItem}>
+            <ListItemIcon >  {projectMenuOpen ? <KeyboardArrowDownIcon /> : <ChevronRightIcon />} </ListItemIcon>
+            <ListItemText primary="Project" />
+            {projectMenuOpen ?<AddIcon style={{ color: "#b8b8b8" }} />: <span></span>}
+          </ListItem>
+
+          <Collapse in={projectMenuOpen} timeout="auto" unmountOnExit>
+            <List component="div" >
+              <ListItem button className={classes.menuItem}>
+                <FiberManualRecordIcon style={{ color: "#b8b8b8" }} />
+                <ListItemText primary="Welcome" className={classes.menuText} />
+                <span style={{ color: "#b8b8b8" }}>5</span>
+              </ListItem>
+
+              <ListItem button className={classes.menuItem}>
+                <AccountCircle style={{ color: "#b8b8b8" }} />
+                <ListItemText primary="Try Board" className={classes.menuText} />
+                <span style={{ color: "#b8b8b8" }}>6</span>
+
+              </ListItem>
+
+              <ListItem button className={classes.menuItem}>
+                <AccountCircle style={{ color: "#3a8235" }} />
+                <ListItemText primary="Trail A" className={classes.menuText} />
+                <span style={{ color: "#b8b8b8" }}>1</span>
+
+              </ListItem>
+              <ListItem button className={classes.menuItem}>
+                <ListItemText style={{ color: "#b8b8b8" }} inset primary="Archived Project" />
+
+
+              </ListItem>
+            </List>
+          </Collapse>
+
+
+          {/* Labels Menu */}
+          <ListItem button onClick={handleLablesMenuClick} className={classes.marginTop20}>
+            <ListItemIcon >  {labelsMenuOpen ? <KeyboardArrowDownIcon /> : <ChevronRightIcon />} </ListItemIcon>
+            <ListItemText primary="Labels" />
+            {labelsMenuOpen ?<AddIcon style={{ color: "#b8b8b8" }} />: <span></span>}
+          </ListItem>
+
+          <Collapse in={labelsMenuOpen} timeout="auto" unmountOnExit>
+            <List component="div" >
+              <ListItem button className={classes.menuItem}>
+                <LocalOfferOutlinedIcon style={{ color: "#4ca9ef" }} />
+                <ListItemText primary="Label 1" className={classes.menuText} />
+                <span style={{ color: "#b8b8b8" }}>4</span>
+              </ListItem>
+
+              <ListItem button className={classes.menuItem}>
+                <LocalOfferOutlinedIcon style={{ color: "#b8b8b8" }} />
+                <ListItemText primary="Label 2" className={classes.menuText} />
+                <span style={{ color: "#b8b8b8" }}></span>
+
+              </ListItem>
+
+            </List>
+          </Collapse>
+
+          {/* Shared Menu */}
+          <ListItem button onClick={handleSharedMenuClick} className={classes.marginTop20}>
+            <ListItemIcon >  {sharedMenuOpen ? <KeyboardArrowDownIcon /> : <ChevronRightIcon />} </ListItemIcon>
+            <ListItemText primary="Shared" />
+            {sharedMenuOpen ?<AddIcon style={{ color: "#b8b8b8" }} />: <span></span>}
+          </ListItem>
+
+          <Collapse in={sharedMenuOpen} timeout="auto" unmountOnExit>
+            <List component="div" >
+              <ListItem button className={classes.menuItem}>
+                <LocalOfferOutlinedIcon style={{ color: "#b8b8b8" }} />
+                <ListItemText primary="Postman" className={classes.menuText} />
+                <span style={{ color: "#b8b8b8" }}>2</span>
+              </ListItem>
+
+            </List>
+          </Collapse>
+
+          {/* Shared Menu */}
+          <ListItem button onClick={handleFilterMenuClick} className={classes.marginTop20}>
+            <ListItemIcon >  {filterMenuOpen ? <KeyboardArrowDownIcon /> : <ChevronRightIcon />} </ListItemIcon>
+            <ListItemText primary="Filter" />
+            {filterMenuOpen ?<AddIcon style={{ color: "#b8b8b8" }} />: <span></span>}
+          </ListItem>
+
+          <Collapse in={filterMenuOpen} timeout="auto" unmountOnExit>
+            <List component="div" >
+              <ListItem button className={classes.menuItem}>
+                <OpacityIcon style={{ color: "#b8b8b8" }} />
+                <ListItemText primary="Assigned to me" className={classes.menuText} />
+                <span style={{ color: "#b8b8b8" }}></span>
+              </ListItem>
+              <ListItem button className={classes.menuItem}>
+                <OpacityIcon style={{ color: "#b8b8b8" }} />
+                <ListItemText primary="Priority 1" className={classes.menuText} />
+                <span style={{ color: "#b8b8b8" }}></span>
+              </ListItem>
+            </List>
+          </Collapse>
+
         </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+
       </Drawer>
       {renderMobileMenu}
       {renderMenu}
 
-    </>
+    </div>
   );
 }
