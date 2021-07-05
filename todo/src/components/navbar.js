@@ -95,9 +95,7 @@ export default function NavBar() {
       setOpen(true);
     };
   
-    const handleDrawerClose = () => {
-      setOpen(false);
-    };
+  
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
